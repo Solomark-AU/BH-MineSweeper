@@ -87,7 +87,7 @@ public:
             for (int j = 0; j < this->WIDTH; j++)
                 this->display[i][j] = '#';
     }
-
+    //before has been updated into generator.hpp
     bool sweep(int x, int y)
     {
         if (x < 0 && x > this->LENGTH && y < 0 && y > this->WIDTH) {

@@ -1,13 +1,9 @@
 #ifndef GENERATOR
 #define GENERATOR
-class Map
-{
-public:
-    int length, width;
-    int map[1005][1005];
-};
 #include <random>
 #include <ctime>
+#include "expand.hpp"
+#include "base.hpp"
 Map generate(int length, int width, int num)
 {
     Map m;
@@ -49,6 +45,7 @@ Map generate(int length, int width, int num)
                 m.map[i][j] = 1;
             else
                 m.map[i][j] = 0;
+            m.dismap[i][j] = 0;
         }
     }
     return m;
