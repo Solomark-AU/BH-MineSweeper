@@ -1,3 +1,5 @@
+#ifndef EXPAND
+#define EXPAND
 #include <iostream>
 #include <string>
 #include <time.h>
@@ -18,25 +20,27 @@ std::string get_FormatTime()
     return std::string(formatTime);
 }
 
-
-void report_Info(std::string info, int datas[], int len) {
+void report_Info(std::string info, int datas[], int len)
+{
     std::cout << "[Info](" << get_FormatTime() << ") " << info << " with datas -> ";
     for (int i = 0; i < len; i++)
         std::cout << datas[i] << ", ";
     std::cout << "\n";
 }
 
-void report_Warn(std::string warn, int datas[], int len) {
+void report_Warn(std::string warn, int datas[], int len)
+{
     std::cout << "[Warn](" << get_FormatTime() << ") " << warn << " with datas -> ";
     for (int i = 0; i < len; i++)
         std::cout << datas[i] << ", ";
     std::cout << "\n";
 }
 
-void report_Error(std::string error, int datas[], int len) {
+void report_Error(std::string error, int datas[], int len)
+{
     std::cout << "[Error](" << get_FormatTime() << ") " << error << " with datas -> ";
     for (int i = 0; i < len; i++)
         std::cout << datas[i] << ", ";
     std::cout << "\n";
 }
-
+#endif

@@ -3,7 +3,7 @@
 #include <random>
 #include <ctime>
 #include "base.hpp"
-//1->Mine   0->Not Mine
+// 1->Mine   0->Not Mine
 Map generate(int length, int width, int num)
 {
     Map m;
@@ -48,6 +48,7 @@ Map generate(int length, int width, int num)
             m.dismap[i][j] = -1;
         }
     }
+    m.safe_box_num = length * width - num;
     return m;
 }
 #endif

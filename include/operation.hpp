@@ -2,7 +2,15 @@
 #define OPERATION
 #include "base.hpp"
 #include <queue>
-void update(int m, int n, Map M)
+
+bool check(int x, int y, Map *M)
+{
+    if (x > 0 && x <= M->length && y > 0 && y <= M->width)
+        return true;
+    return false;
+}
+
+void update(int m, int n, Map *M)
 {
     struct point
     {
@@ -13,61 +21,65 @@ void update(int m, int n, Map M)
     int move[10][2]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
     while (!q.empty())
     {
+
         int x = q.front().x, y = q.front().y;
         q.pop();
-        for (int i = 0; i < 8; i++)
+        if (M->dismap[x][y] != -1)
+            continue;
+        (M->opened_box_num)++;
+        int numbers = 0;
+        for (int j = 0; j < 8; j++)
         {
-            x = x + move[i][0];
-            y = y + move[i][1];
-            if (x > 0 && x <= M.length && y > 0 && y <= M.width && M.map[x][y] == 0 && M.dismap[x][y] == -1)
+            if (check(x + move[j][0], y + move[j][1], M) && M->map[x + move[j][0]][y + move[j][1]] == 1)
+                numbers++;
+        }
+        M->dismap[x][y] = numbers;
+        if (numbers == 0)
+        {
+            for (int i = 0; i < 8; i++)
             {
-                q.push(point{x, y});
-                int numbers = 0;
-                for (int j = 0; j < 8; j++)
-                {
-                    if (x + move[j][0] > 0 && x + move[j][0] <= M.length && y + move[j][1] > 0 && y + move[j][1] <= M.width && M.map[x + move[j][0]][y + move[j][1]] == 1)
-                        numbers++;
-                }
-                M.dismap[x][y] = numbers;
+                if (check(x + move[i][0], y + move[i][1], M) && M->map[x + move[i][0]][y + move[i][1]] == 0 && M->dismap[x + move[i][0]][y + move[i][1]] == -1)
+                    q.push(point{x + move[i][0], y + move[i][1]});
             }
-            x = x - move[i][0];
-            y = y - move[i][1];
         }
     }
 }
-int sweep(int x, int y, Map m)
+
+int sweep(int x, int y, Map *_map)
 {
-    if (x < 1 || x > m.length || y < 1 || y > m.width)
-        return -1;
-    if (m.map[x][y])
+    if (_map->map[x][y])
         return 0;
-    update(x, y, m);
+    update(x, y, _map);
+    if (_map->safe_box_num == _map->opened_box_num)
+        return 2;
     return 1;
 }
-void print(int x, int y, Map m)
+
+void display(Map *_map)
 {
-    for (int i = 1; i <= m.width; i++)
+    std::cout << " ";
+    for (int i = 1; i <= _map->width; i++)
         std::cout << "-";
-    std::cout << std::endl;
-    for (int i = 1; i <= m.length; i++)
+    std::cout << "\n";
+    for (int j = 1; j <= _map->width; j++)
     {
         std::cout << "|";
-        for (int j = 1; j <= m.width; j++)
+        for (int i = 1; i <= _map->length; i++)
         {
-            if (m.dismap[i][j] == -1)
+            if (_map->dismap[i][j] == -1)
                 std::cout << "#";
-            else if (m.dismap[i][j] == 9)
+            else if (_map->dismap[i][j] == 9)
                 std::cout << "@";
-            else if (m.dismap[i][j] == 0)
+            else if (_map->dismap[i][j] == 0)
                 std::cout << " ";
             else
-                std::cout << m.dismap[i][j];
+                std::cout << _map->dismap[i][j];
         }
-        std::cout << "|";
-        std::cout << std::endl;
+        std::cout << "|\n";
     }
-    for (int i = 1; i <= m.width; i++)
+    std::cout << " ";
+    for (int i = 1; i <= _map->width; i++)
         std::cout << "-";
-    std::cout << std::endl;
+    std::cout << "\n";
 }
 #endif

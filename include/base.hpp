@@ -5,7 +5,7 @@
 class Map
 {
 public:
-    int length, width;
+    int length, width,safe_box_num,opened_box_num=0;
     // map:雷or非雷
     // 1->Mine   0->Not Mine
     int map[1005][1005];
