@@ -2,8 +2,8 @@
 #define GENERATOR
 #include <random>
 #include <ctime>
-#include "expand.hpp"
 #include "base.hpp"
+//1->Mine   0->Not Mine
 Map generate(int length, int width, int num)
 {
     Map m;
@@ -45,7 +45,7 @@ Map generate(int length, int width, int num)
                 m.map[i][j] = 1;
             else
                 m.map[i][j] = 0;
-            m.dismap[i][j] = 0;
+            m.dismap[i][j] = -1;
         }
     }
     return m;

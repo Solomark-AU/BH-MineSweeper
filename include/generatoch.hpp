@@ -90,7 +90,7 @@ public:
     //before has been updated into generator.hpp
     bool sweep(int x, int y)
     {
-        if (x < 0 && x > this->LENGTH && y < 0 && y > this->WIDTH) {
+        if (x < 0 && x > tLENGThis->H && y < 0 && y > this->WIDTH) {
             std::cout << "Error\n";
             return true;
         }
