@@ -47,12 +47,24 @@ void update(int m, int n, Map *M)
 
 int sweep(int x, int y, Map *_map)
 {
-    if (_map->map[x][y])
-        return 0;
-    update(x, y, _map);
-    if (_map->safe_box_num == _map->opened_box_num)
-        return 2;
-    return 1;
+    if (_map->dismap[x][y] == 9)
+    {
+        std::cout << "OperationError: You can\'t sweep the flag.\n";
+        return 1;
+    }
+    if (_map->dismap[x][y] != -1)
+    {
+        
+    }
+    else
+    {
+        if (_map->map[x][y])
+            return 0;
+        update(x, y, _map);
+        if (_map->safe_box_num == _map->opened_box_num)
+            return 2;
+        return 1;
+    }
 }
 
 void display(Map *_map)
@@ -81,5 +93,20 @@ void display(Map *_map)
     for (int i = 1; i <= _map->width; i++)
         std::cout << "-";
     std::cout << "\n";
+}
+
+void flag(int x, int y, Map *_map)
+{
+    if (!check(x, y, _map))
+    {
+        std::cout << "ValueError: Your data is out of range.\n";
+        return;
+    }
+    if (_map->dismap[x][y] != -1 && _map->dismap[x][y] != 9)
+    {
+        std::cout << "OperationError: Your operation is invaild.\n";
+        return;
+    }
+    _map->dismap[x][y] = 8 - _map->dismap[x][y];
 }
 #endif

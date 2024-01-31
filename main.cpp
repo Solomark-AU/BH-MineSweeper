@@ -3,6 +3,7 @@
 #include "include/headers.hpp"
 using namespace std;
 
+void fun();
 Map m;
 string order;
 bool MapExist = false;
@@ -11,8 +12,10 @@ map<string, long double> variables;
 int main()
 {
     variables["difficulty"] = 0.8;
+    variables["author"] = 0;
     while (true)
     {
+        fun();
         cin >> order;
         if (order == "start")
         {
@@ -53,6 +56,24 @@ int main()
                 cout << "ValueError: Your data is with some wrong.\n";
             }
         }
+        else if (order == "show")
+        {
+            try
+            {
+                string param;
+                cin >> param;
+                if (variables.find(param) == variables.end())
+                {
+                    cout << "[Info] Show \"" << param << "\" as " << variables[param] << " successfully.\n";
+                    continue;
+                }
+                cout << "[Info] There is no such a key called \"" << param << "\"\n";
+            }
+            catch (...)
+            {
+                cout << "ValueError: Your data is with some wrong.\n";
+            }
+        }
         else if (order == "exit")
             break;
         else if (order == "display")
@@ -77,28 +98,54 @@ int main()
                 cin >> x >> y;
                 if (!check(x, y, &m))
                 {
-                    cout << "ValueError: Your data is error.\n";
+                    cout << "ValueError: Your data is out of range.\n";
                     continue;
                 }
                 int k = sweep(x, y, &m);
                 if (k == 0)
                 {
-                    cout << "You lose the game!";
-                    break;
+                    cout << "You lose the game!\n";
+                    MapExist = false;
+                    continue;
                 }
                 else if (k == 2)
                 {
-                    cout << "You win the game!";
-                    break;
+                    cout << "You win the game!\n";
+                    MapExist = false;
+                    continue;
                 }
             }
             catch (...)
             {
-                cout << "ValueError: Your data is with some wrong.\n";
+                cout << "ValueError: Your data is wrong.\n";
+            }
+        }
+        else if (order == "flag")
+        {
+            if (!MapExist)
+            {
+                cout << "MapError: The map has not been created.\n";
+                continue;
+            }
+            int x, y;
+            try
+            {
+                cin >> x >> y;
+                flag(x, y, &m);
+            }
+            catch (...)
+            {
+                cout << "ValueError: Your data is wrong.\n";
             }
         }
         else
             cout << "KeyError: There isn't a command called \"" << order << "\"\n";
     }
     return 0;
+}
+
+void fun()
+{
+    if (variables["author"] == 250)
+        cout << "[WARNING] Fuck You!\n";
 }
