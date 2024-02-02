@@ -5,6 +5,7 @@
 目前计划为其设计一个GUI 但是可能长期咕咕咕
 
 
+
 A simple Minesweeper game which is developed by @LinkDevCodes and @Herobrine6265
 
 The game guide can be read by inputing help in the game
