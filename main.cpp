@@ -87,15 +87,15 @@ int main()
         }
         else if (order == "sweep")
         {
-            if (!MapExist)
-            {
-                cout << "MapError: The map has not been created.\n";
-                continue;
-            }
             int x, y;
             try
             {
                 cin >> x >> y;
+                if (!MapExist)
+                {
+                    cout << "MapError: The map has not been created.\n";
+                    continue;
+                }
                 if (!check(x, y, &m))
                 {
                     cout << "ValueError: Your data is out of range.\n";
@@ -122,21 +122,31 @@ int main()
         }
         else if (order == "flag")
         {
-            if (!MapExist)
-            {
-                cout << "MapError: The map has not been created.\n";
-                continue;
-            }
             int x, y;
             try
             {
                 cin >> x >> y;
+                if (!MapExist)
+                {
+                    cout << "MapError: The map has not been created.\n";
+                    continue;
+                }
                 flag(x, y, &m);
             }
             catch (...)
             {
                 cout << "ValueError: Your data is wrong.\n";
             }
+        }
+        else if (order == "help")
+        {
+            cout << "order::display() -> None -> [To display your map]\n"
+                 << "order::exit() -> None [Exit game]\n"
+                 << "order::flag(int coordination-X, int coordination-Y) -> None [To help you mark the mines or cancel mark ]\n"
+                 << "order::set(string variable, long double value) -> [Set your game]\n"
+                 << "order::show(string variable) -> [To show your variables]\n"
+                 << "order::start(int LENGTH, int WIDTH, int MINES) -> None [Start your game]\n"
+                 << "order::sweep(int coordination-X, int coordination-Y) -> int sweep one area you choose without mines\n";
         }
         else
             cout << "KeyError: There isn't a command called \"" << order << "\"\n";

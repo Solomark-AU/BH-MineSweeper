@@ -52,9 +52,36 @@ int sweep(int x, int y, Map *_map)
         std::cout << "OperationError: You can\'t sweep the flag.\n";
         return 1;
     }
-    if (_map->dismap[x][y] != -1)
+    else if (_map->dismap[x][y] == 0)
     {
-        
+        std::cout << "OperationError: You can't sweep this position\n";
+        return 1;
+    }
+    else if (_map->dismap[x][y] != -1)
+    {
+        int number = 0, move[10][2]{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+        for (int i = 0; i < 8; i++)
+        {
+            if (_map->dismap[x + move[i][0]][y + move[i][1]] == 9)
+                number++;
+        }
+        if (number == _map->dismap[x][y])
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                if (_map->dismap[x + move[i][0]][y + move[i][1]] == -1)
+                {
+                    int k = sweep(x + move[i][0], y + move[i][1], _map);
+                    if (k != 1)
+                        return k;
+                }
+            }
+        }
+        else
+        {
+            std::cout << "OperationError: You can't sweep this position\n"; 
+        }
+        return 1;
     }
     else
     {
